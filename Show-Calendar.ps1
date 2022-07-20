@@ -1,7 +1,6 @@
 <#
 .SYNOPSIS
 Shows interactive calendar.
-K!2019
 
 .DESCRIPTION
  Cursor keys (Up/Down/Left/Right) - change day
