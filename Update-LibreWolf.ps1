@@ -41,7 +41,8 @@ if ($latest_release.tag_name -ne $installed_version) {
     $sha256sums_link = ($latest_release.assets.links | 
         ? { $_.name -match 'sha256sums.txt'})[0];
 
-    $sha256sums = (wget -uri $sha256sums_link.url).Content -split "\n";
+    $sha256sums_content = (wget -uri $sha256sums_link.url).Content
+    $sha256sums = [System.Text.Encoding]::ASCII.GetString($sha256sums_content)  -split "\n";
     $sha256 = 
         (($sha256sums | select-string -Pattern $links[0].name) -split " ")[0];
 
@@ -52,7 +53,6 @@ if ($latest_release.tag_name -ne $installed_version) {
     }
 
     $file_hash = (get-filehash -algorithm sha256 -path $download_path).Hash;
-
     if ($file_hash -ne $sha256) {
         write-host -Foreground Red "Invalid hash. Run the script again."
         rm $download_path;
