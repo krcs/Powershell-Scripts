@@ -7,7 +7,7 @@ https://github.com/krcs/Powershell-Scripts
 
 #>
 param()
-$pathToDevcon_x64 = "C:\Program Files (x86)\Windows Kits\10\Tools\x64\devcon.exe"
+$pathToDevcon_x64 = "C:\Bin\devcon.exe"
 
 function CleanSCFILTER() {
     & $pathToDevcon_x64 findall "*SCFILTER*" | Where-Object { $_ -like '*SCFILTER*' } | ForEach-Object {

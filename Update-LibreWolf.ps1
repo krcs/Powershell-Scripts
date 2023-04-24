@@ -22,7 +22,7 @@ if(test-path $librewolf_reg) {
     $installed_version = "v$((Get-Item $exe).VersionInfo.ProductVersion)";
 }
 
-$releases = wget -uri $releases_url | 
+$releases = Invoke-WebRequest -uri $releases_url | 
     select -ExpandProperty Content | 
     ConvertFrom-Json;
 
@@ -41,7 +41,7 @@ if ($latest_release.tag_name -ne $installed_version) {
     $sha256sums_link = ($latest_release.assets.links | 
         ? { $_.name -match 'sha256sums.txt'})[0];
 
-    $sha256sums_content = (wget -uri $sha256sums_link.url).Content
+    $sha256sums_content = (Invoke-WebRequest -uri $sha256sums_link.url).Content
     $sha256sums = [System.Text.Encoding]::ASCII.GetString($sha256sums_content)  -split "\n";
     $sha256 = 
         (($sha256sums | select-string -Pattern $links[0].name) -split " ")[0];
@@ -49,7 +49,7 @@ if ($latest_release.tag_name -ne $installed_version) {
     $download_path = join-path $env:TEMP $links[0].name;
 
     if (!(test-path $download_path)) {
-        wget -uri $links[0].url -outfile $download_path;
+        Invoke-WebRequest -uri $links[0].url -outfile $download_path;
     }
 
     $file_hash = (get-filehash -algorithm sha256 -path $download_path).Hash;
