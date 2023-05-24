@@ -11,7 +11,7 @@ $librewolf_reg =
     'Registry::HKEY_CURRENT_USER\SOFTWARE\LibreWolf\Firefox\Launcher';
 
 $releases_url = 
-    'https://gitlab.com/api/v4/projects/13852981/releases';
+    'https://gitlab.com/api/v4/projects/44042130/releases';
 
 $installed_version = "";
 
