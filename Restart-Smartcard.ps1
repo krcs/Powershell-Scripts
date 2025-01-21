@@ -33,6 +33,10 @@ if (!(Test-Path $pathToDevcon_x64)) {
     exit
 }
 
+gpg-connect-agent -q killagent /bye
+gpg-connect-agent -q /bye
+
 CleanSCFILTER;
+
 RestartSmartcard;
 & $pathToDevcon_x64 rescan
